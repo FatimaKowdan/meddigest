@@ -605,7 +605,7 @@ export default function MedDigest() {
               Medical research,<br /><span style={{ fontStyle: "italic", color: "var(--gray-500)" }}>made digestible.</span>
             </h1>
             <p style={{ fontFamily: "var(--sans)", fontSize: 17, color: "var(--gray-600)", lineHeight: 1.7, maxWidth: 560, marginBottom: 48, fontWeight: 300 }}>
-              <span onClick={() => setShowMethodology(true)} style={{ textDecoration: "underline", textDecorationColor: "var(--accent)", textUnderlineOffset: 3, cursor: "pointer" }}>Real studies from PubMed</span> with AI-written headlines to make them readable. Abstracts shown as published.
+              <span onClick={() => setShowMethodology(true)} style={{ textDecoration: "underline", textDecorationColor: "var(--accent)", textUnderlineOffset: 3, cursor: "pointer" }}>Real medical studies</span> summarized. Keep up with the breakthroughs that concern you.
             </p>
             <button onClick={() => setStep(1)} {...hoverBtn("var(--black)", "var(--accent)")}>Get started</button>
             <div style={{ marginTop: 80, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", borderTop: "1px solid var(--gray-200)", paddingTop: 28 }}>

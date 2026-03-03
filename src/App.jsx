@@ -325,11 +325,11 @@ const MethodologyModal = ({ open, onClose }) => {
       <div style={{ position: "absolute", inset: 0, background: "rgba(45,36,56,0.45)", backdropFilter: "blur(2px)" }} onClick={onClose} />
       <div style={{ position: "relative", background: "var(--white)", maxWidth: 600, width: "100%", maxHeight: "80vh", overflow: "auto", padding: "36px 32px" }}>
         <button onClick={onClose} style={{ position: "absolute", top: 16, right: 20, fontFamily: "var(--mono)", fontSize: 18, background: "none", border: "none", cursor: "pointer", color: "var(--gray-400)" }}>&times;</button>
-        <h2 style={{ fontFamily: "var(--serif)", fontSize: 28, fontWeight: 400, color: "var(--black)", marginBottom: 24 }}>The approach to AI summarization</h2>
+        <h2 style={{ fontFamily: "var(--serif)", fontSize: 28, fontWeight: 400, color: "var(--black)", marginBottom: 24 }}>How MedDigest works</h2>
         <div style={{ fontFamily: "var(--sans)", fontSize: 14, color: "var(--gray-600)", lineHeight: 1.8, fontWeight: 300 }}>
           <div style={{ marginBottom: 24 }}>
-            <div style={{ fontFamily: "var(--mono)", fontSize: 10, fontWeight: 700, color: "var(--accent)", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 8 }}>How summaries are generated</div>
-            <p style={{ margin: 0 }}>Every digest queries PubMed's E-utilities API in real time. Studies are fetched by relevance for your selected topics from the past year. Abstracts are parsed directly from PubMed XML — no AI summarization, no training data, no hallucination. What you read is what the researchers published.</p>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 10, fontWeight: 700, color: "var(--accent)", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 8 }}>How it works</div>
+            <p style={{ margin: 0 }}>Every digest queries PubMed's E-utilities API in real time. Studies are fetched by relevance for your selected topics from the past year. Abstracts are shown exactly as published by the researchers. AI is used only to generate plain-language headlines — everything else comes directly from PubMed.</p>
           </div>
           <div style={{ marginBottom: 24 }}>
             <div style={{ fontFamily: "var(--mono)", fontSize: 10, fontWeight: 700, color: "var(--accent)", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 8 }}>How evidence is graded</div>
@@ -347,7 +347,7 @@ const MethodologyModal = ({ open, onClose }) => {
           </div>
           <div>
             <div style={{ fontFamily: "var(--mono)", fontSize: 10, fontWeight: 700, color: "var(--accent)", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 8 }}>What this isn't</div>
-            <p style={{ margin: 0 }}>This is not medical advice. No treatment recommendations. No editorializing. No AI-generated interpretations. Every abstract links directly to the original paper on PubMed.</p>
+            <p style={{ margin: 0 }}>This is not medical advice. No treatment recommendations. No editorializing. AI writes the headline only — the abstract, findings, and limitations are from the original paper. Every study links directly to PubMed.</p>
           </div>
         </div>
       </div>
@@ -366,8 +366,8 @@ const HonestyModal = ({ open, onClose }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           {[
             ["Real-time sourcing", "Queries PubMed E-utilities API directly — every study shown was fetched live from the National Library of Medicine."],
+            ["AI headlines only", "AI writes a plain-language headline for each study. The abstract, key findings, and limitations are from the original paper — unedited."],
             ["Evidence grading", "Every study gets a transparent evidence badge based on study design and publication type metadata from PubMed."],
-            ["Mandatory limitations", "Limitations are extracted directly from the abstract when available. Small samples, narrow populations, and short durations are flagged."],
             ["Verifiable links", "Every study links to DOI and PubMed. You can always read the original paper."]
           ].map(([t, d], i) => (
             <div key={i}>
@@ -605,7 +605,7 @@ export default function MedDigest() {
               Medical research,<br /><span style={{ fontStyle: "italic", color: "var(--gray-500)" }}>made digestible.</span>
             </h1>
             <p style={{ fontFamily: "var(--sans)", fontSize: 17, color: "var(--gray-600)", lineHeight: 1.7, maxWidth: 560, marginBottom: 48, fontWeight: 300 }}>
-              <span onClick={() => setShowMethodology(true)} style={{ textDecoration: "underline", textDecorationColor: "var(--accent)", textUnderlineOffset: 3, cursor: "pointer" }}>Real studies from PubMed</span>, delivered to your inbox. Understand the breakthroughs that concern you.
+              <span onClick={() => setShowMethodology(true)} style={{ textDecoration: "underline", textDecorationColor: "var(--accent)", textUnderlineOffset: 3, cursor: "pointer" }}>Real studies from PubMed</span> with AI-written headlines to make them readable. Abstracts shown as published.
             </p>
             <button onClick={() => setStep(1)} {...hoverBtn("var(--black)", "var(--accent)")}>Get started</button>
             <div style={{ marginTop: 80, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", borderTop: "1px solid var(--gray-200)", paddingTop: 28 }}>
@@ -699,7 +699,7 @@ export default function MedDigest() {
                 </div>
                 <div style={{ background: "#fef9c3", padding: "10px 28px", marginBottom: 24, display: "flex", alignItems: "center", gap: 10, borderBottom: "2px solid #fde047" }}>
                   <span style={{ fontFamily: "var(--mono)", fontSize: 11, fontWeight: 700, color: "#854d0e" }}>&#9888; RESEARCH DATA</span>
-                  <span style={{ fontFamily: "var(--sans)", fontSize: 12, color: "#92400e", fontWeight: 300 }}>Real studies from PubMed. Abstracts shown as published. Not medical advice.</span>
+                  <span style={{ fontFamily: "var(--sans)", fontSize: 12, color: "#92400e", fontWeight: 300 }}>Real studies from PubMed. Headlines are AI-generated. Abstracts are as published. Not medical advice.</span>
                 </div>
                 {studies.map((study, i) => {
                   const ex = expandedStudy === i;
@@ -806,3 +806,4 @@ export default function MedDigest() {
     </div>
   );
 }
+

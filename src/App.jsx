@@ -495,6 +495,7 @@ export default function MedDigest() {
   const [expandedStudy, setExpandedStudy] = useState(null);
   const [showMethodology, setShowMethodology] = useState(false);
   const [showHonesty, setShowHonesty] = useState(false);
+  const [evidenceFilter, setEvidenceFilter] = useState("all");
   const [studies, setStudies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
@@ -694,14 +695,32 @@ export default function MedDigest() {
                       <div style={{ fontFamily: "var(--mono)", fontSize: 13, fontWeight: 700, color: "var(--white)" }}>MEDDIGEST<span style={{ color: "var(--accent)" }}>.</span></div>
                       <div style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--gray-500)", marginTop: 4, display: "flex", alignItems: "center", gap: 8 }}>{frequency === "biweekly" ? "Biweekly" : "Monthly"} &middot; {new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})} <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: "#4ade80", fontSize: 9, fontWeight: 700, letterSpacing: "1px" }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: "#4ade80", display: "inline-block" }}></span>LIVE</span></div>
                     </div>
-                    <div style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--gray-500)", textAlign: "right" }}>{studies.length} studies<br/>{selectedTopics.slice(0,3).join(" · ")}{selectedTopics.length > 3 ? " · ..." : ""}</div>
+                    <div style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--gray-500)", textAlign: "right" }}>{evidenceFilter === "all" ? studies.length : studies.filter(s => evidenceFilter === "high" ? s.evidenceLevel === "high" : s.evidenceLevel === "high" || s.evidenceLevel === "moderate").length}/{studies.length} studies<br/>{selectedTopics.slice(0,3).join(" · ")}{selectedTopics.length > 3 ? " · ..." : ""}</div>
                   </div>
                 </div>
                 <div style={{ background: "#fef9c3", padding: "10px 28px", marginBottom: 24, display: "flex", alignItems: "center", gap: 10, borderBottom: "2px solid #fde047" }}>
                   <span style={{ fontFamily: "var(--mono)", fontSize: 11, fontWeight: 700, color: "#854d0e" }}>&#9888; RESEARCH DATA</span>
                   <span style={{ fontFamily: "var(--sans)", fontSize: 12, color: "#92400e", fontWeight: 300 }}>Real studies from PubMed. Headlines are AI-generated. Abstracts are as published. Not medical advice.</span>
                 </div>
-                {studies.map((study, i) => {
+                {/* Evidence filter */}
+                <div style={{ display: "flex", gap: 8, padding: "0 28px", marginBottom: 20, alignItems: "center" }}>
+                  <span style={{ fontFamily: "var(--mono)", fontSize: 10, color: "var(--gray-400)", letterSpacing: "1px", marginRight: 4 }}>SHOW:</span>
+                  {[["all", "All"], ["high", "Strong"], ["moderate", "Moderate+"]].map(([val, label]) => (
+                    <button key={val} onClick={() => setEvidenceFilter(val)} style={{
+                      fontFamily: "var(--mono)", fontSize: 10, fontWeight: evidenceFilter === val ? 700 : 400,
+                      letterSpacing: "0.5px", padding: "4px 10px", cursor: "pointer", border: "1px solid",
+                      borderColor: evidenceFilter === val ? "var(--accent)" : "var(--gray-200)",
+                      background: evidenceFilter === val ? "var(--accent-light)" : "var(--white)",
+                      color: evidenceFilter === val ? "var(--accent)" : "var(--gray-500)",
+                    }}>{label}</button>
+                  ))}
+                </div>
+                {studies.filter(s => {
+                  if (evidenceFilter === "all") return true;
+                  if (evidenceFilter === "high") return s.evidenceLevel === "high";
+                  if (evidenceFilter === "moderate") return s.evidenceLevel === "high" || s.evidenceLevel === "moderate";
+                  return true;
+                }).map((study, i) => {
                   const ex = expandedStudy === i;
                   return (
                     <div key={i} style={{ background: "var(--white)", border: "1px solid var(--gray-200)", marginBottom: 20 }}>
